@@ -1,0 +1,22 @@
+library(mongolite)
+library(lubridate)
+library(ggplot2)
+ 
+data = mongo(collection="crimes", db="test")
+domestic = data$find('{"Domestic": true}')
+ 
+hours = hour(parse_date_time(domestic$Date, c("mdy-HMS %p", "mdy-HM")))
+days = weekdays(parse_date_time(domestic$Date, c("mdy-HMS %p", "mdy-HM")))
+ 
+hour(parse_date_time("03/18/2015 11:30:00 AM", c("mdy-HMS", "mdy-HM")))
+ 
+plotData = as.data.frame(table(days, hours))
+dayType = ifelse(days %in% c("Saturday", "Sunday"), "Weekend", "Weekday")
+ 
+dayData = as.data.frame(table(hours, dayType))
+ 
+#ggplot(plotData, aes(x = hours, y = Freq, group=days, color=days)) + 
+#  geom_line() + ggtitle("Don't go to Chicago")
+ 
+ggplot(dayData, aes(x = hours, y = Freq, group=dayType, color=dayType)) + 
+  geom_line() + ggtitle("Don't go to Chicago")
