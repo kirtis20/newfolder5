@@ -1,0 +1,35 @@
+Dimension
+Measures
+a. Top 5 best batsman in IPL
+    1.Add batsman to column
+    2.Add batsman runs to rows
+    3.Use filter to display only top 5 players(filter > top > 5)
+    4.Add batsman to colour in the marks section to make a coloured graph
+    5.Add batsman runs to label in the marks section
+
+b. Top 5 batsman season wise(2012)
+    1.Add batsman to column
+    2.Add batsman runs to rows
+    3.Drag date to the filter section > click year > 2008 > apply
+    4.Right click and select ‘add to context’ option
+    5.Right click on year and click on show filter
+    6.Click on year in show filter > right click and choose ‘single value dropdown’
+    7.Add batsman to the filter section and edit to the filter to your choice.
+
+c. Purple cap winner
+    1.Add bowler to column
+    2.Add is wicket to rows
+    3.Drag date to the filter section > click year > 2008 > apply
+    4.Right click and select ‘add to context’ option
+    5.Right click on year and click on show filter
+    6.Click on year in show filter> right click and choose ‘single value dropdown’
+    7.Use filter to display only top 1 players(filter > top > 1)
+    8.Add dismissal kind to filter and select everything except NA to run out
+
+d. Player with max sixes
+    1.Add batsman to column
+    2.Add count of batsman runs to rows
+    3.In filter:
+    4.Batsman runs > all values > 6 to 6 > add to context (Batsman runs > duplicate > convert to discrete > select 6)
+    5.Date > year > (any year) > add to context
+    6.Batsman > top > by field > 1
