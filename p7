@@ -1,0 +1,7 @@
+centuries
+1. create calculated field 'total_runs' -> {FIXED [Id], [Batsman]:SUM([Batsman Runs])}
+2. create calculated field 'Century' -> IIF([total_runs]>=100,1,0)
+3. batsman-> rows, SUM(Century) -> columns
+4. year(date) -> filters
+5. SUM(Century) -> filters
+6. SUM(Century) -> labels
