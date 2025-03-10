@@ -48,4 +48,4 @@ res=na.omit(my_collection$aggregate('[{"$group":{"_id":"$Location Description","
 #one json validation later
 rescrop=head(res, 20)
 library(ggplot2)
-ggplot(data=rescrop, aes(x=_id, y=count)) + geom_bar(stat = "identity", fill="blue")+coord_flip()
+ggplot(data=rescrop, aes(x=reorder(_id, count), y=count)) + geom_bar(stat = "identity", fill="blue")+coord_flip()
