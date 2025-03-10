@@ -25,3 +25,27 @@ ggplot(top_crimes, aes(x = reorder(`_id`, Total_Crimes), y = Total_Crimes)) +
   geom_text(aes(label = Total_Crimes), vjust = -0.3) +  # Add text labels above the bars
   labs(x = "Street", y = "Crime Count", title = "Top 10 Streets with Maximum Crimes") +
   coord_flip() 
+
+
+----------------------------------------------------------------------------------------------
+library(mongolite)
+
+my_collection = mongo(collection="crimes", db="jeff")
+#mongo() creates a CONNECTION between the mongo server and r studio
+
+my_collection$count()
+#count innit
+
+my_collection$count(query = '{"Location Description": "SIDEWALK"}')
+#mongodb query in SINGLE quotes, passed as key value pair
+#count of sidewalk crimes
+
+my_collection$find(query = '{"Location Description": "AIRCRAFT"}')
+#find() displays the documents, count() displays the count of documents
+#(shocking, I know)
+
+res=na.omit(my_collection$aggregate('[{"$group":{"_id":"$Location Description","count":{"$count":{}}}},{"$sort":{"count":-1}}]'))
+#one json validation later
+rescrop=head(res, 20)
+library(ggplot2)
+ggplot(data=rescrop, aes(x=_id, y=count)) + geom_bar(stat = "identity", fill="blue")+coord_flip()
