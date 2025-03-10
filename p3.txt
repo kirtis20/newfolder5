@@ -43,3 +43,44 @@ ggplot(weekend_data, aes(x=Hours, y=n)) +
   geom_line(aes(group=DayOfWeek, color=DayOfWeek), size=0.5) +
   xlab("Hour") + ylab("Frequency") +
   ggtitle("Crimes on Weekends (Saturday & Sunday)")
+
+
+Q1] Day wise in week which day has how many crimes
+data = mongo(db="shubh", collection = "CRIMES")
+data$count()
+
+data$find('{"Domestic":true}', '{"Domestic":1, "Date":1, "_id":0}')
+domdata = data$find('{"Domestic":true}', '{"Domestic":1, "Date":1, "_id":0}')
+domdata$Date = mdy_hms(domdata$Date)
+domdata$Weekday = weekdays(domdata$Date)
+WeekdayCounts = as.data.frame(table(domdata$Weekday))
+ggplot(data=WeekdayCounts, aes(x=Var1, y=Freq, group=1))+geom_line()
+WeekdayCounts$Var1 = factor(WeekdayCounts$Var1, ordered = TRUE, levels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+ggplot(data=WeekdayCounts, aes(x=Var1, y=Freq, group=1))+geom_line(color ="red")
+
+
+Q2] Hourly wise crimes
+data = mongo(db="shubh", collection = "CRIMES")
+data$count()
+data$find('{"Domestic":true}', '{"Domestic":1, "Date":1, "_id":0}')
+domdata = data$find('{"Domestic":true}', '{"Domestic":1, "Date":1, "_id":0}')
+domdata$Hour=hour(domdata$Date)
+hourCount = as.data.frame(table(domdata$Hour))
+ggplot(data=hourCount, aes(x=Var1, y=Freq, group=1))+geom_line(color ="red")
+
+
+Q3] Month wise crimes
+
+# Ensure Date is in Date format (adjust the format to match your actual date format)
+domdata$Date <- as.Date(domdata$Date, format="%Y-%m-%d")  # Change the format if necessary
+
+# Extract the month
+domdata$Month <- format(domdata$Date, "%m")  # Extracts the month as a character
+
+# Create the table of counts by month
+monthCount = as.data.frame(table(domdata$Month))
+
+# Plot the data
+ggplot(data=monthCount, aes(x=Var1, y=Freq, group=1)) +
+  geom_line(color ="red") +
+  labs(x="Month", y="Frequency", title="Monthly Frequency")
